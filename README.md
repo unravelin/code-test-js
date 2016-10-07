@@ -1,5 +1,5 @@
 # Ravelin Javascript Code Test
-Build a d3 graph of similar restaurants in London using the foursquare api.
+Build a d3 graph of similar restaurants in London using the foursquare api. Feel free to use any lib/framework you deem as necessary. Please include a readme with your code test.
 
 ## User Story
 A user visits a website with two text fields: 
@@ -17,5 +17,7 @@ After entering the api key and restaurant name, the user are given a list of res
 - http://bl.ocks.org/mbostock/4062045
 - https://developer.foursquare.com/docs/
 - https://bl.ocks.org/mbostock/1095795
+
+
 
 
