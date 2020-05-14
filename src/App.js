@@ -11,7 +11,7 @@ function App() {
     <Provider store={store}>
       <div className="App">
         <InputForm />
-        <SimilarRestaurantsGraph />
+        <SimilarRestaurantsGraph data={[5,10,1,3]} size={[500,500]} />
       </div>
     </Provider>
   );
