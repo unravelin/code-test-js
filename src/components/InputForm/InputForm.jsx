@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getSuggestedVenues, setClientId, setClientSecret } from '../../actions/fourSquareActions';
+import { setGraphInitialized } from '../../actions/graphActions';
 
 import './InputForm.css';
 
@@ -15,6 +16,7 @@ const mapDispatchToProps = {
   getSuggestedVenuesBound: getSuggestedVenues,
   setClientIdBound: setClientId,
   setClientSecretBound: setClientSecret,
+  setGraphInitializedBound: setGraphInitialized,
 }
 
 export const InputForm = ({
@@ -25,10 +27,12 @@ export const InputForm = ({
   getSuggestedVenuesBound,
   setClientIdBound,
   setClientSecretBound,
+  setGraphInitializedBound,
 }) => {
   const onClientIdChange = (event) => setClientIdBound(event.target.value);
   const onClientSecretChange = (event) => setClientSecretBound(event.target.value);
   const onSuggestedVenuesChange = (event) => getSuggestedVenuesBound(event.target.value);
+  const onShowtimeClick = (event) => setGraphInitializedBound();
 
   return (
     <div className="input-form">
@@ -41,7 +45,7 @@ export const InputForm = ({
             <option key={venue.id} value={venue.name} data-id={venue.id}></option>
           ))}
         </datalist>
-        <button className="showtime-button" disabled={!selectedVenueId}>Its showtime!</button>
+        <button className="showtime-button" disabled={!selectedVenueId} onClick={onShowtimeClick}>Its showtime!</button>
       </div>
     </div>
   );

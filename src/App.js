@@ -4,12 +4,14 @@ import store from './store';
 import './App.scss';
 
 import InputForm from './components/InputForm/InputForm';
+import SimilarRestaurantsGraph from './components/graphs/SimilarRestaurantsGraph';
 
 function App() {
   return (
     <Provider store={store}>
       <div className="App">
         <InputForm />
+        <SimilarRestaurantsGraph />
       </div>
     </Provider>
   );
