@@ -6,6 +6,7 @@ export const TYPES = {
   GET_SUGGESTED_VENUES: 'GET_SUGGESTED_VENUES',
   SET_CLIENT_ID: 'SET_CLIENT_ID',
   SET_CLIENT_SECRET: 'SET_CLIENT_SECRET',
+  SELECT_VENUE: 'SELECT_VENUE',
 }
 
 export const getSuggestedVenuesSuccess = (response) => ({
@@ -28,9 +29,15 @@ export const setClientSecret = (clientSecret) => ({
   clientSecret,
 });
 
+export const selectVenue = (venueName) => ({
+  type: TYPES.SELECT_VENUE,
+  venueName,
+})
+
 export const getSuggestedVenues = (query) => async(dispatch, getState) => {
   try {
     const { fourSquare: { clientId, clientSecret } } = getState();
+    dispatch(selectVenue(query));
     const response = await api.getSuggestedVenues(clientId, clientSecret, query);
     const responseJson = await response.json();
     return dispatch(getSuggestedVenuesSuccess(responseJson.response.venues.slice(0, 8)));

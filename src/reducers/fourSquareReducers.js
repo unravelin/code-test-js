@@ -20,10 +20,25 @@ export const setClientSecret = (state, clientSecret) => ({
   clientSecret,
 });
 
+export const setSelectedVenue = (state, venueName) => {
+  let selectedVenueId;
+  const selectedVenue = state.suggestedVenues.filter(venue => venue.name === venueName);
+
+  if (selectedVenue?.length) {
+    selectedVenueId = selectedVenue[0].id;
+  }
+
+  return {
+    ...state,
+    selectedVenueId,
+  }
+};
+
 const defaultState = {
   clientId: '',
   clientSecret: '',
   suggestedVenues: [],
+  selectedVenueId: "",
 };
 
 export default (state, action) => {
@@ -32,6 +47,7 @@ export default (state, action) => {
     case TYPES.GET_SUGGESTED_VENUES_ERROR: return getSuggestedVenuesError(state, action.response)
     case TYPES.SET_CLIENT_ID: return setClientId(state, action.clientId)
     case TYPES.SET_CLIENT_SECRET: return setClientSecret(state, action.clientSecret)
+    case TYPES.SELECT_VENUE: return setSelectedVenue(state, action.venueName)
     default: return defaultState;
   }
 };
