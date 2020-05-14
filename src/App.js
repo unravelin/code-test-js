@@ -1,9 +1,12 @@
 import React from 'react';
+import './App.scss';
+
+import InputForm from './components/InputForm/InputForm';
 
 function App() {
   return (
     <div className="App">
-      Hello world
+      <InputForm />
     </div>
   );
 }
