@@ -48,7 +48,7 @@ export default (state, action) => {
     case TYPES.SET_CLIENT_ID: return setClientId(state, action.clientId)
     case TYPES.SET_CLIENT_SECRET: return setClientSecret(state, action.clientSecret)
     case TYPES.SELECT_VENUE: return setSelectedVenue(state, action.venueName)
-    default: return defaultState;
+    default: return state || defaultState;
   }
 };
 

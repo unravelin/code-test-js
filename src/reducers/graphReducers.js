@@ -12,7 +12,7 @@ const defaultState = {
 export default (state, action) => {
   switch(action.type) {
     case TYPES.SET_GRAPH_INITIALIZED: return setGraphInitialized(state)
-    default: return defaultState;
+    default: return state || defaultState;
   }
 };
 
