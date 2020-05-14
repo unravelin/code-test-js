@@ -1,25 +1,48 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { getSuggestedVenues, setClientId, setClientSecret } from '../../actions/fourSquareActions';
+
 import './InputForm.css';
+
+const mapStateToProps = (state) => ({
+  clientId: state?.fourSquare?.clientId,
+  clientSecret: state?.fourSquare?.clientSecret,
+  suggestedVenues: state?.fourSquare?.suggestedVenues,
+});
+
+const mapDispatchToProps = {
+  getSuggestedVenuesBound: getSuggestedVenues,
+  setClientIdBound: setClientId,
+  setClientSecretBound: setClientSecret,
+}
 
 export const InputForm = ({
   clientId,
   clientSecret,
   suggestedVenues,
-}) => (
-  <div className="input-form">
-    <div className="input-field">clientID: <input id="clientId" value={clientId} /></div>
-    <div className="input-field">clientSecret: <input id="clientSecret" value={clientSecret} /></div>
-    <div className="input-field">venue: <input id="selectedVenue" list="suggestedVenues"/></div>
-    <datalist list="venues" id="suggestedVenues">
-      {suggestedVenues.map(venue => (
-        <option key={venue} value={venue}></option>
-      ))}
-    </datalist>
-  </div>
-);
+  getSuggestedVenuesBound,
+  setClientIdBound,
+  setClientSecretBound,
+}) => {
+  const onClientIdChange = (event) => setClientIdBound(event.target.value);
+  const onClientSecretChange = (event) => setClientSecretBound(event.target.value);
+  const onSuggestedVenuesChange = (event) => getSuggestedVenuesBound(event.target.value);
+  return (
+    <div className="input-form">
+      <div className="input-field">clientID: <input id="clientId" value={clientId} onChange={onClientIdChange}/></div>
+      <div className="input-field">clientSecret: <input id="clientSecret" value={clientSecret} onChange={onClientSecretChange}/></div>
+      <div className="input-field">venue: <input id="selectedVenue" list="suggestedVenues" onChange={onSuggestedVenuesChange}/></div>
+      <datalist list="venues" id="suggestedVenues">
+        {suggestedVenues.map(venue => (
+          <option key={venue.id} value={venue.name}></option>
+        ))}
+      </datalist>
+    </div>
+  );
+};
 
 InputForm.defaultProps = {
   suggestedVenues: [],
 }
 
-export default InputForm;
+export default connect(mapStateToProps, mapDispatchToProps)(InputForm);
