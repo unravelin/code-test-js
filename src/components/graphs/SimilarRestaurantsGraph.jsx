@@ -1,10 +1,17 @@
 import React, { useRef, useEffect } from 'react';
-import { select, max, scaleLinear } from 'd3';
-// import node from './diagram';
+import {
+  forceSimulation,
+  forceLink,
+  forceManyBody,
+  forceCenter,
+  select,
+} from 'd3';
+import node from './miserables.json';
 import { connect } from 'react-redux';
 
 export const mapStateToProps = (state) => ({
   graphInitialized: state?.graphState?.graphInitialized,
+  data: node,
 });
 
 export const SimilarRestaurantsGraph = ({ graphInitialized, data, size }) => {
@@ -12,31 +19,44 @@ export const SimilarRestaurantsGraph = ({ graphInitialized, data, size }) => {
 
   useEffect(() => {
     if (graphInitialized) {
-      const dataMax = max(data)
-      const yScale = scaleLinear()
-        .domain([0, dataMax])
-        .range([0, size[1]]);
+      const links = data.links.map(d => Object.create(d));
+      const nodes = data.nodes.map(d => Object.create(d));
 
-      select(d3Ref.current)
-          .selectAll('rect')
-          .data(data)
-          .enter()
-          .append('rect');
+      const simulation = forceSimulation(nodes)
+      .force("link", forceLink(links).id(d => d.id))
+      .force("charge", forceManyBody())
+      .force("center", forceCenter(250, 250));
 
-      select(d3Ref.current)
-          .selectAll('rect')
-          .data(data)
-          .exit()
-          .remove();
+      const link = select(d3Ref.current)
+        .append("g")
+        .attr("stroke", "#999")
+        .attr("stroke-opacity", 0.6)
+        .selectAll("line")
+        .data(links)
+        .join("line")
+        .attr("stroke-width", d => Math.sqrt(d.value));
 
-      select(d3Ref.current)
-          .selectAll('rect')
-          .data(data)
-          .style('fill', '#fe9922')
-          .attr('x', (d,i) => i * 25)
-          .attr('y', (d) => size[1] - yScale(d))
-          .attr('height', d => yScale(d))
-          .attr('width', 25);
+      const node = select(d3Ref.current)
+      .append("g")
+        .attr("stroke", "#fff")
+        .attr("stroke-width", 1.5)
+        .selectAll("circle")
+        .data(nodes)
+        .join("circle")
+        .attr("r", 5)
+        .attr("fill", 'black');
+
+      simulation.on("tick", () => {
+        link
+            .attr("x1", d => d.source.x)
+            .attr("y1", d => d.source.y)
+            .attr("x2", d => d.target.x)
+            .attr("y2", d => d.target.y);
+
+        node
+            .attr("cx", d => d.x)
+            .attr("cy", d => d.y);
+      });
     }
   }, [data, graphInitialized, size]);
 
