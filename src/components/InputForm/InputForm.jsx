@@ -10,6 +10,7 @@ const mapStateToProps = (state) => ({
   clientSecret: state?.fourSquare?.clientSecret,
   suggestedVenues: state?.fourSquare?.suggestedVenues,
   selectedVenueId: state?.fourSquare?.selectedVenue?.id,
+  isSimulationOn: state?.graphState?.isSimulationOn
 });
 
 const mapDispatchToProps = {
@@ -25,6 +26,7 @@ export const InputForm = ({
   clientSecret,
   suggestedVenues,
   selectedVenueId,
+  isSimulationOn,
   getSuggestedVenuesBound,
   setClientIdBound,
   setClientSecretBound,
@@ -49,7 +51,9 @@ export const InputForm = ({
           ))}
         </datalist>
         <button className="showtime-button" disabled={!selectedVenueId} onClick={onShowtimeClick}>Its showtime!</button>
-        <button onClick={onSimulationStop}>Stop simulation</button>
+        {isSimulationOn && (
+          <button className="showtime-button" onClick={onSimulationStop}>Stop simulation</button>
+        )}
       </div>
     </div>
   );

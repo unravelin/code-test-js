@@ -9,23 +9,21 @@ import {
 import { connect } from 'react-redux';
 
 export const mapStateToProps = (state) => ({
-  graphMounted: state?.graphState?.graphMounted,
+  isSimulationOn: state?.graphState?.isSimulationOn,
   dataNodes: state?.graphState?.nodes ?? new Map(),
   dataLinks: state?.graphState?.links ?? new Set(),
 });
 
 
-export const SimilarRestaurantsGraph = ({ graphMounted, dataNodes, dataLinks }) => {
+export const SimilarRestaurantsGraph = ({ isSimulationOn, dataNodes, dataLinks }) => {
   const d3Ref = useRef(null);
 
   useEffect(() => {
-    if (graphMounted) {
+    if (isSimulationOn) {
       const links = [];
       const nodes = [];
       dataLinks.forEach((link) => links.push(Object.assign({}, link)));
       dataNodes.forEach((node) => nodes.push(Object.assign({}, node)));
-
-      console.log('nodes', dataNodes);
 
       const simulation = forceSimulation(nodes)
         .force("link", forceLink(links).id(d => d.id))
@@ -38,30 +36,58 @@ export const SimilarRestaurantsGraph = ({ graphMounted, dataNodes, dataLinks }) 
         .join("line")
         .attr("stroke", "#999")
         .attr("stroke-opacity", 0.6)
-        .attr("stroke-width", 1);
+        .attr("stroke-width", 2)
+        .lower();
 
       const node = select(d3Ref.current)
         .selectAll("circle")
         .data(nodes)
         .join("circle")
-        .attr("r", 5)
-        .attr("stroke", "#fff")
+        .attr("stroke", "white")
+        .attr('stroke-opacity', 1)
         .attr("stroke-width", 1.5)
-        .attr("fill", d => d.foundSimilar ? 'red' : 'black');
+        .attr("fill", d => d.foundSimilar ? 'red' : 'black')
+        .call(node => node.transition().attr('r', 5))
+        .on('mouseover', (d) => {
+          const node = select(d3Ref.current)
+          node
+            .append('rect')
+            .attr('width', d.name.length * 8)
+            .attr('height', 20)
+            .attr('x', d.x + 15)
+            .attr('y', d.y)
+            .attr('fill', '#f0f8ff')
+            .attr('stroke', '#98cfff')
+
+          node
+            .append('text')
+            .attr('x', d.x + 15)
+            .attr('y', d.y + 15)
+            .text(d.name)
+        })
+        .on('mouseout', () => {
+          const node = select(d3Ref.current);
+          node
+            .selectAll('rect')
+            .remove()
+          node
+            .selectAll('text')
+            .remove()
+        });
 
       simulation.on("tick", () => {
         link
-          .attr("x1", d => d.source.x)
-          .attr("y1", d => d.source.y)
-          .attr("x2", d => d.target.x)
-          .attr("y2", d => d.target.y);
+          .attr('x1', d => d.source.x)
+          .attr('y1', d => d.source.y)
+          .attr('x2', d => d.target.x)
+          .attr('y2', d => d.target.y)
 
         node
           .attr("cx", d => d.x)
           .attr("cy", d => d.y);
       });
     }
-  }, [dataLinks, dataNodes, graphMounted]);
+  }, [dataLinks, dataNodes, isSimulationOn]);
 
   return (
     <div>

@@ -2,7 +2,7 @@ import { TYPES } from '../actions/graphActions';
 
 export const mountDirectedGraph = (state) => ({
   ...state,
-  graphMounted: true,
+  isSimulationOn: true,
 })
 
 export const addNode = (state, node) => {
@@ -47,10 +47,9 @@ export const setSimulationStopped = (state) => ({
 })
 
 const defaultState = {
-  graphMounted: false,
   nodes: new Map(),
   links: new Set(),
-  isSimulationOn: true,
+  isSimulationOn: false,
 };
 
 export default (state, action) => {
