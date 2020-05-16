@@ -21,24 +21,19 @@ export const setClientSecret = (state, clientSecret) => ({
 });
 
 export const setSelectedVenue = (state, venueName) => {
-  let selectedVenueId;
-  const selectedVenue = state.suggestedVenues.filter(venue => venue.name === venueName);
-
-  if (selectedVenue?.length) {
-    selectedVenueId = selectedVenue[0].id;
-  }
+  const selectedVenue = state.suggestedVenues.filter(venue => venue.name === venueName) ?? null;
 
   return {
     ...state,
-    selectedVenueId,
+    selectedVenue: selectedVenue[0],
   }
 };
 
 const defaultState = {
-  clientId: 'WYDQCHD5EVBWAR4MFDGGEVKX3HBSOKDQACBRAKFIFPXDBYQC',
-  clientSecret: 'ILCHK4QCZ0KTMHOYXRE0QT0QRG5TTRGKK021RYOJHIDAABDR',
+  clientId: '',
+  clientSecret: '',
   suggestedVenues: [],
-  selectedVenueId: "",
+  selectedVenue: null,
 };
 
 export default (state, action) => {

@@ -23,7 +23,7 @@ export const addLink = (link) => ({
   link,
 });
 
-export const getSimilarVenuesSuccess = (response, venueId) => async(dispatch, getState) => {
+export const getSimilarVenuesSuccess = (response, venueId) => async(dispatch) => {
   response.response.similarVenues.items.forEach(item => {
     const link = {
       source: venueId,
@@ -32,6 +32,9 @@ export const getSimilarVenuesSuccess = (response, venueId) => async(dispatch, ge
     dispatch(addNode(item));
     dispatch(addLink(link));
 
+    // setTimeout(() => {
+    //   dispatch(getSimilarVenuesFor(item.id))
+    // }, 2500);
   });
 };
 
@@ -40,15 +43,25 @@ export const getSimilarVenuesError = (error) => ({
   error,
 });
 
-export const setGraphInitialized = ()  => async (dispatch, getState) => {
-  dispatch(mountGraph());
-
+export const getSimilarVenuesFor = (venueId) => async (dispatch, getState) => {
   try {
-    const { fourSquare: { clientId, clientSecret, selectedVenueId } } = getState();
-    const response = await api.getSimilarVenues(clientId, clientSecret, selectedVenueId)
+    const { fourSquare: { clientId, clientSecret } } = getState();
+    const response = await api.getSimilarVenues(clientId, clientSecret, venueId)
     const responseJson = await response.json();
-    return dispatch(getSimilarVenuesSuccess(responseJson, selectedVenueId));
+    return dispatch(getSimilarVenuesSuccess(responseJson, venueId));
   } catch(error) {
     return dispatch(getSimilarVenuesError(error))
   }
+}
+
+export const setGraphInitialized = (selectedVenueId) => async (dispatch, getState) => {
+  dispatch(mountGraph());
+  const { fourSquare: { selectedVenue }} = getState();
+
+  const firstNode = selectedVenue;
+  dispatch(addNode(firstNode));
+
+  setTimeout(() => {
+    dispatch(getSimilarVenuesFor(selectedVenueId));
+  }, 1000);
 };

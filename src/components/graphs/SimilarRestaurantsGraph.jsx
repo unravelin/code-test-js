@@ -25,9 +25,6 @@ export const SimilarRestaurantsGraph = ({ graphMounted, dataNodes, dataLinks }) 
       dataLinks.forEach((link) => links.push(Object.assign({}, link)));
       dataNodes.forEach((node) => nodes.push(Object.assign({}, node)));
 
-      console.log('links', links);
-      console.log('nodes', nodes);
-
       const simulation = forceSimulation(nodes)
         .force("link", forceLink(links).id(d => d.id))
         .force("charge", forceManyBody())

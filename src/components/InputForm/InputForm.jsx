@@ -9,7 +9,7 @@ const mapStateToProps = (state) => ({
   clientId: state?.fourSquare?.clientId,
   clientSecret: state?.fourSquare?.clientSecret,
   suggestedVenues: state?.fourSquare?.suggestedVenues,
-  selectedVenueId: state?.fourSquare?.selectedVenueId,
+  selectedVenueId: state?.fourSquare?.selectedVenue?.id,
 });
 
 const mapDispatchToProps = {
@@ -32,7 +32,7 @@ export const InputForm = ({
   const onClientIdChange = (event) => setClientIdBound(event.target.value);
   const onClientSecretChange = (event) => setClientSecretBound(event.target.value);
   const onSuggestedVenuesChange = (event) => getSuggestedVenuesBound(event.target.value);
-  const onShowtimeClick = (event) => setGraphInitializedBound();
+  const onShowtimeClick = () => setGraphInitializedBound(selectedVenueId);
 
   return (
     <div className="input-form">

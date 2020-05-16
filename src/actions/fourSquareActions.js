@@ -1,5 +1,4 @@
 import api from './api';
-import { TYPES as GRAPH_TYPES } from './graphActions';
 
 export const TYPES = {
   GET_SUGGESTED_VENUES_ERROR: 'GET_SUGGESTED_VENUES_ERROR',
@@ -30,23 +29,10 @@ export const setClientSecret = (clientSecret) => ({
   clientSecret,
 });
 
-export const selectVenue = (venueName) => async(dispatch, getState) => {
-  dispatch({
-    type: TYPES.SELECT_VENUE,
-    venueName,
-  });
-
-  const state = getState();
-
-  const selectedVenue = state.fourSquare.suggestedVenues.filter(venue => venue.name === venueName);
-
-  if (selectedVenue?.length) {
-    dispatch({
-      type: GRAPH_TYPES.ADD_NODE,
-      node: selectedVenue[0],
-    })
-  }
-};
+export const selectVenue = (venueName) => ({
+  type: TYPES.SELECT_VENUE,
+  venueName,
+});
 
 export const getSuggestedVenues = (query) => async(dispatch, getState) => {
   try {
