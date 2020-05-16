@@ -6,26 +6,32 @@ import {
   forceCenter,
   select,
 } from 'd3';
-import node from './miserables.json';
 import { connect } from 'react-redux';
 
 export const mapStateToProps = (state) => ({
-  graphInitialized: state?.graphState?.graphInitialized,
-  data: node,
+  graphMounted: state?.graphState?.graphMounted,
+  dataNodes: state?.graphState?.nodes ?? new Map(),
+  dataLinks: state?.graphState?.links ?? new Set(),
 });
 
-export const SimilarRestaurantsGraph = ({ graphInitialized, data, size }) => {
+
+export const SimilarRestaurantsGraph = ({ graphMounted, dataNodes, dataLinks }) => {
   const d3Ref = useRef(null);
 
   useEffect(() => {
-    if (graphInitialized) {
-      const links = data.links.map(d => Object.create(d));
-      const nodes = data.nodes.map(d => Object.create(d));
+    if (graphMounted) {
+      const links = [];
+      const nodes = [];
+      dataLinks.forEach((link) => links.push(Object.assign({}, link)));
+      dataNodes.forEach((node) => nodes.push(Object.assign({}, node)));
+
+      console.log('links', links);
+      console.log('nodes', nodes);
 
       const simulation = forceSimulation(nodes)
-      .force("link", forceLink(links).id(d => d.id))
-      .force("charge", forceManyBody())
-      .force("center", forceCenter(250, 250));
+        .force("link", forceLink(links).id(d => d.id))
+        .force("charge", forceManyBody())
+        .force("center", forceCenter(250, 250));
 
       const link = select(d3Ref.current)
         .append("g")
@@ -37,7 +43,7 @@ export const SimilarRestaurantsGraph = ({ graphInitialized, data, size }) => {
         .attr("stroke-width", d => Math.sqrt(d.value));
 
       const node = select(d3Ref.current)
-      .append("g")
+        .append("g")
         .attr("stroke", "#fff")
         .attr("stroke-width", 1.5)
         .selectAll("circle")
@@ -58,7 +64,7 @@ export const SimilarRestaurantsGraph = ({ graphInitialized, data, size }) => {
             .attr("cy", d => d.y);
       });
     }
-  }, [data, graphInitialized, size]);
+  }, [dataLinks, dataNodes, graphMounted]);
 
   return (
     <div>
