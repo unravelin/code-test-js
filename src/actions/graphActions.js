@@ -1,12 +1,13 @@
 import api from './api';
 
 export const TYPES = {
-  SET_GRAPH_INITIALIZED: 'SET_GRAPH_INITIALIZED',
-  MOUNT_GRAPH: 'MOUNT_GRAPH',
-  GET_SIMILAR_VENUES_SUCCESS: 'GET_SIMILAR_VENUES_SUCCESS',
-  GET_SIMILAR_VENUES_ERROR: 'GET_SIMILAR_VENUES_ERROR',
-  ADD_NODE: 'ADD_NODE',
   ADD_LINK: 'ADD_LINK',
+  ADD_NODE: 'ADD_NODE',
+  GET_SIMILAR_VENUES_ERROR: 'GET_SIMILAR_VENUES_ERROR',
+  GET_SIMILAR_VENUES_SUCCESS: 'GET_SIMILAR_VENUES_SUCCESS',
+  MOUNT_GRAPH: 'MOUNT_GRAPH',
+  SET_FOUND_SIMILAR_VENUES: 'SET_FOUND_SIMILAR_VENUES',
+  SET_GRAPH_INITIALIZED: 'SET_GRAPH_INITIALIZED',
 }
 
 export const mountGraph = () => ({
@@ -43,25 +44,41 @@ export const getSimilarVenuesError = (error) => ({
   error,
 });
 
+export const setFoundSimilarVenuesFor = (venueId) => ({
+  type: TYPES.SET_FOUND_SIMILAR_VENUES,
+  venueId,
+})
+
 export const getSimilarVenuesFor = (venueId) => async (dispatch, getState) => {
   try {
     const { fourSquare: { clientId, clientSecret } } = getState();
     const response = await api.getSimilarVenues(clientId, clientSecret, venueId)
     const responseJson = await response.json();
+    dispatch(setFoundSimilarVenuesFor(venueId));
     return dispatch(getSimilarVenuesSuccess(responseJson, venueId));
   } catch(error) {
     return dispatch(getSimilarVenuesError(error))
   }
 }
 
-export const setGraphInitialized = (selectedVenueId) => async (dispatch, getState) => {
+export const findNextSimilarVenue = () => (dispatch, getState) => {
+  const interval = setInterval(() => {
+    const { graphState: { nodes } } = getState();
+    for(let [nodeKey, nodeValue] of nodes) {
+      if (!nodeValue.foundSimilar) {
+        dispatch(getSimilarVenuesFor(nodeKey));
+        return;
+      }
+    }
+
+    clearInterval(interval);
+  }, 1000);
+};
+
+export const setGraphInitialized = () => async (dispatch, getState) => {
   dispatch(mountGraph());
   const { fourSquare: { selectedVenue }} = getState();
 
-  const firstNode = selectedVenue;
-  dispatch(addNode(firstNode));
-
-  setTimeout(() => {
-    dispatch(getSimilarVenuesFor(selectedVenueId));
-  }, 1000);
+  dispatch(addNode(selectedVenue));
+  dispatch(findNextSimilarVenue());
 };

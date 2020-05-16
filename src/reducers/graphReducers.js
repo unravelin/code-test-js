@@ -27,6 +27,20 @@ export const addLink = (state, link) => {
   return newState;
 };
 
+export const setFoundSimilarVenuesFor = (state, venueId) => {
+  const newState = {...state};
+
+  if (state.nodes.has(venueId)) {
+    const foundNode = state.nodes.get(venueId);
+    const newFoundNode = {...foundNode, foundSimilar: true}
+    const newNodes = new Map(state.nodes).set(venueId, newFoundNode);
+    newState.nodes = newNodes;
+  }
+  console.log('first');
+
+  return newState;
+}
+
 const defaultState = {
   graphMounted: false,
   nodes: new Map(),
@@ -38,6 +52,7 @@ export default (state, action) => {
     case TYPES.MOUNT_GRAPH: return mountDirectedGraph(state)
     case TYPES.ADD_NODE: return addNode(state, action.node)
     case TYPES.ADD_LINK: return addLink(state, action.link)
+    case TYPES.SET_FOUND_SIMILAR_VENUES: return setFoundSimilarVenuesFor(state, action.venueId)
     default: return state || defaultState;
   }
 };

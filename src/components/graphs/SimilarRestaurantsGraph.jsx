@@ -25,6 +25,8 @@ export const SimilarRestaurantsGraph = ({ graphMounted, dataNodes, dataLinks }) 
       dataLinks.forEach((link) => links.push(Object.assign({}, link)));
       dataNodes.forEach((node) => nodes.push(Object.assign({}, node)));
 
+      console.log('nodes', dataNodes);
+
       const simulation = forceSimulation(nodes)
         .force("link", forceLink(links).id(d => d.id))
         .force("charge", forceManyBody())
@@ -45,7 +47,7 @@ export const SimilarRestaurantsGraph = ({ graphMounted, dataNodes, dataLinks }) 
         .attr("r", 5)
         .attr("stroke", "#fff")
         .attr("stroke-width", 1.5)
-        .attr("fill", 'black');
+        .attr("fill", d => d.foundSimilar ? 'red' : 'black');
 
       simulation.on("tick", () => {
         link
