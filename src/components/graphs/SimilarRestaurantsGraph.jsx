@@ -5,6 +5,8 @@ import {
   forceManyBody,
   forceCenter,
   select,
+  drag,
+  event as d3Event,
 } from 'd3';
 import { connect } from 'react-redux';
 
@@ -73,7 +75,23 @@ export const SimilarRestaurantsGraph = ({ isSimulationOn, dataNodes, dataLinks }
           node
             .selectAll('text')
             .remove()
-        });
+        })
+        .call(drag()
+          .on('start', (d) => {
+            if (!d3Event.active) simulation.alphaTarget(0.3).restart();
+            d.fx = d.x;
+            d.fy = d.y;
+          })
+          .on('drag', (d) => {
+            d.fx = d3Event.x;
+            d.fy = d3Event.y;
+          })
+          .on('end', (d) => {
+            if (!d3Event.active) simulation.alphaTarget(0);
+            d.fx = null;
+            d.fy = null;
+          })
+        );
 
       simulation.on("tick", () => {
         link
