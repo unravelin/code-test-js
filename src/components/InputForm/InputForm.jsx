@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getSuggestedVenues, setClientId, setClientSecret } from '../../actions/fourSquareActions';
-import { setGraphInitialized } from '../../actions/graphActions';
+import { setGraphInitialized, stopSimulation } from '../../actions/graphActions';
 
 import './InputForm.css';
 
@@ -17,6 +17,7 @@ const mapDispatchToProps = {
   setClientIdBound: setClientId,
   setClientSecretBound: setClientSecret,
   setGraphInitializedBound: setGraphInitialized,
+  stopSimulationBound: stopSimulation,
 }
 
 export const InputForm = ({
@@ -28,11 +29,13 @@ export const InputForm = ({
   setClientIdBound,
   setClientSecretBound,
   setGraphInitializedBound,
+  stopSimulationBound,
 }) => {
   const onClientIdChange = (event) => setClientIdBound(event.target.value);
   const onClientSecretChange = (event) => setClientSecretBound(event.target.value);
   const onSuggestedVenuesChange = (event) => getSuggestedVenuesBound(event.target.value);
   const onShowtimeClick = () => setGraphInitializedBound(selectedVenueId);
+  const onSimulationStop = () => stopSimulationBound();
 
   return (
     <div className="input-form">
@@ -46,6 +49,7 @@ export const InputForm = ({
           ))}
         </datalist>
         <button className="showtime-button" disabled={!selectedVenueId} onClick={onShowtimeClick}>Its showtime!</button>
+        <button onClick={onSimulationStop}>Stop simulation</button>
       </div>
     </div>
   );

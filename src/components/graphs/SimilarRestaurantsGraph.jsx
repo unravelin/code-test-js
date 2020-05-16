@@ -38,7 +38,7 @@ export const SimilarRestaurantsGraph = ({ graphMounted, dataNodes, dataLinks }) 
         .join("line")
         .attr("stroke", "#999")
         .attr("stroke-opacity", 0.6)
-        .attr("stroke-width", d => Math.sqrt(d.value));
+        .attr("stroke-width", 1);
 
       const node = select(d3Ref.current)
         .selectAll("circle")
