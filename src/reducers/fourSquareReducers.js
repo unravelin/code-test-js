@@ -30,8 +30,8 @@ export const setSelectedVenue = (state, venueName) => {
 };
 
 const defaultState = {
-  clientId: '1LVO5CCVM4NSIYGVLTVSNJ3YK3JAD31UC5TKN5PURUFOW3TO',
-  clientSecret: 'X4VBZE1Q45BI1NTBVHNXUSRQGFU5UXD4T5NPOTUOQCOQUD5J',
+  clientId: '',
+  clientSecret: '',
   suggestedVenues: [],
   selectedVenue: null,
 };
