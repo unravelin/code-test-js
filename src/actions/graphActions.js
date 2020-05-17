@@ -18,31 +18,27 @@ export const mountGraph = () => ({
 
 export const addNode = (node) => {
   Restaurants.addEntry(node);
-
-  return {
-    type: 'ADD_NODE',
-    node,
-  };
 };
 
 export const addLink = (link) => {
   Restaurants.addSimilarity(link);
-
-  return {
-    type: 'ADD_LINK',
-    link,
-  };
 };
 
-export const getSimilarVenuesSuccess = (response, venueId) => async(dispatch) => {
+export const getSimilarVenuesSuccess = (response, venueId) => (dispatch, getState) => {
+  const {
+    graphState: { isSimulationOn },
+  } = getState();
   response.response.similarVenues.items.forEach(item => {
     const link = {
       source: venueId,
       target: item.id,
     };
-    dispatch(addNode(item));
-    dispatch(addLink(link));
+    addNode(item);
+    addLink(link);
   });
+  if (isSimulationOn) {
+    Restaurants.triggerUpdate();
+  }
 };
 
 export const stopSimulation = () => ({
@@ -56,10 +52,6 @@ export const getSimilarVenuesError = (error) => ({
 
 export const setFoundSimilarVenuesFor = (venueId) => {
   Restaurants.setFoundEntry(venueId);
-  return {
-    type: TYPES.SET_FOUND_SIMILAR_VENUES,
-    venueId,
-  };
 }
 
 export const waitFor = async(duration) => new Promise(resolve => setTimeout(resolve, duration));
@@ -72,7 +64,7 @@ export const getSimilarVenuesFor = (venueId) => async (dispatch, getState) => {
     } = getState();
     const response = await api.getSimilarVenues(clientId, clientSecret, venueId)
     const responseJson = await response.json();
-    dispatch(setFoundSimilarVenuesFor(venueId));
+    setFoundSimilarVenuesFor(venueId);
     dispatch(getSimilarVenuesSuccess(responseJson, venueId));
 
     await waitFor(1000);
@@ -84,21 +76,23 @@ export const getSimilarVenuesFor = (venueId) => async (dispatch, getState) => {
   }
 }
 
-export const findNextSimilarVenue = () => (dispatch, getState) => {
-    const { graphState: { nodes } } = getState();
+export const findNextSimilarVenue = () => (dispatch) => {
+  const entries = Restaurants.entries;
 
-    for(let [nodeKey, nodeValue] of nodes) {
-      if (!nodeValue.foundSimilar) {
-        dispatch(getSimilarVenuesFor(nodeKey));
-        return;
-      }
+  entries.values().some((restaurant) => {
+    if (!restaurant.foundSimilar) {
+      dispatch(getSimilarVenuesFor(restaurant.id));
+      return true;
     }
+    return false;
+  })
 };
 
 export const setGraphInitialized = () => async (dispatch, getState) => {
   dispatch(mountGraph());
   const { fourSquare: { selectedVenue }} = getState();
 
-  dispatch(addNode(selectedVenue));
+  addNode(selectedVenue);
+  Restaurants.triggerUpdate();
   dispatch(findNextSimilarVenue());
 };

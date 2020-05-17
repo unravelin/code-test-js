@@ -4,14 +4,12 @@ class Restaurants {
   constructor() {
     this.entries = d3Map();
     this.similarities = d3Map();
-    this.entrySubscriptions = [];
-    this.similaritySubscriptions = [];
+    this.subscriptions = [];
   }
 
   addEntry(restaurant) {
     if(!this.entries.has(restaurant.id)) {
       this.entries.set(restaurant.id, restaurant);
-      this.onUpdateEntry(restaurant);
     }
   }
 
@@ -20,40 +18,25 @@ class Restaurants {
       const restaurant = this.entries.get(restaurantId);
       restaurant.foundSimilar = true;
 
-      this.onUpdateEntry(restaurant);
     }
   }
 
   updateEntry(restaurant) {
     if(this.entries.has(restaurant.id)) {
       this.entries.set(restaurant.id, restaurant);
-      this.onUpdateEntry(restaurant);
     }
+  }
+
+  triggerUpdate() {
+    this.subscriptions.forEach((subscription) => subscription());
   }
 
   addSimilarity(similarity) {
     this.similarities.set(`${similarity.source}-${similarity.target}`, similarity);
-    this.onAddSubscription(similarity);
   }
 
-  onUpdateEntry(restaurant) {
-    this.entrySubscriptions.forEach((subscription) => {
-      subscription.call(this, restaurant);
-    });
-  }
-
-  onAddSubscription(similarity) {
-    this.similaritySubscriptions.forEach((subscription) => {
-      subscription.call(this, similarity);
-    });
-  }
-
-  setRestaurantListener(callback) {
-    this.entrySubscriptions.push(callback);
-  }
-
-  setSimilarityListener(callback) {
-    this.similaritySubscriptions.push(callback);
+  setSubscription(callback) {
+    this.subscriptions.push(callback);
   }
 }
 
