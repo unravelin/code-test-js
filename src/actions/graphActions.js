@@ -1,4 +1,5 @@
 import api from './api';
+import Restaurants from './Restaurants';
 
 export const TYPES = {
   ADD_LINK: 'ADD_LINK',
@@ -15,15 +16,23 @@ export const mountGraph = () => ({
   type: 'MOUNT_GRAPH'
 });
 
-export const addNode = (node) => ({
-  type: 'ADD_NODE',
-  node,
-});
+export const addNode = (node) => {
+  Restaurants.addEntry(node);
 
-export const addLink = (link) => ({
-  type: 'ADD_LINK',
-  link,
-});
+  return {
+    type: 'ADD_NODE',
+    node,
+  };
+};
+
+export const addLink = (link) => {
+  Restaurants.addSimilarity(link);
+
+  return {
+    type: 'ADD_LINK',
+    link,
+  };
+};
 
 export const getSimilarVenuesSuccess = (response, venueId) => async(dispatch) => {
   response.response.similarVenues.items.forEach(item => {
@@ -45,10 +54,13 @@ export const getSimilarVenuesError = (error) => ({
   error,
 });
 
-export const setFoundSimilarVenuesFor = (venueId) => ({
-  type: TYPES.SET_FOUND_SIMILAR_VENUES,
-  venueId,
-})
+export const setFoundSimilarVenuesFor = (venueId) => {
+  Restaurants.setFoundEntry(venueId);
+  return {
+    type: TYPES.SET_FOUND_SIMILAR_VENUES,
+    venueId,
+  };
+}
 
 export const waitFor = async(duration) => new Promise(resolve => setTimeout(resolve, duration));
 
