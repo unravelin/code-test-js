@@ -1,4 +1,4 @@
-import { map as d3Map, set as d3Set } from 'd3';
+import { map as d3Map } from 'd3';
 
 class Restaurants {
   constructor() {
