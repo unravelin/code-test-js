@@ -17,7 +17,7 @@ As time passes, for each node, a venue API call (`v2/venues/{venueId}/similar`) 
 ![D3 Graph](https://raw.githubusercontent.com/unravelin/code-test-js/master/graph.png)
 
 ## Requirements
-- App must work as described in the [User Story](## User Story)
+- App must work as described in the [User Story](#User Story)
 - Showcase your CSS chops. Try and do some amount of original CSS styling.
 
 ## Nice to haves
