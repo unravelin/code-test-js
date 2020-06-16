@@ -16,6 +16,14 @@ As time passes, for each node, a venue API call (`v2/venues/{venueId}/similar`) 
 
 ![D3 Graph](https://raw.githubusercontent.com/unravelin/code-test-js/master/graph.png)
 
+## Requirements
+- App must work as described in the [User Story](## User Story)
+- Showcase your CSS chops. Try and do some amount of original CSS styling.
+
+## Nice to haves
+- TypeScript Support
+- Unit Tests
+
 ## Foursquare API Endpoints
 - https://api.foursquare.com/v2/venues/search?near=London&query={venueName}&client_id={CLIENT_ID}&client_secret={CLIENT_SECRET}&v=20200226
 - https://api.foursquare.com/v2/venues/{venueId}/similar?client_id={CLIENT_ID}&client_secret={CLIENT_SECRET}&v=20200226
@@ -25,9 +33,6 @@ To get access to the Foursquare API you need to create a developer account. Foll
 - Sign up
 - Create an app (your app URL can be localhost)
 - Obtain your Client ID and Client Secret
-
-## Nice to haves
-- Show us your CSS chops. Try and do some amount of original CSS styling.
 
 ## Resources
 - [d3 GitHub repo](https://github.com/d3/d3)
