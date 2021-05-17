@@ -1,5 +1,5 @@
 # Ravelin Front-End Code Test
-Build a small app to search for restaurants in London using the Foursquare API. Feel free to use any library or framework of choice.
+Build a small app to search for restaurants in London using the Foursquare API.
 
 ## User Story
 A user visits a website with three text fields:
@@ -17,7 +17,9 @@ The website should cache search results for five minutes. When the user searches
 - Showcase your CSS chops. Try and do some amount of original CSS styling.
 - Include a README alongside your code test detailing how to run it.
 
-Follow the directions from the recruiter on how to submit the exercise. Please do not publish your code publicly on GitHub or any other site.
+This repo includes a basic scaffold using [create-react-app](https://github.com/facebook/create-react-app) which you are welcome to clone and use as a starting point. However, if you'd prefer to use something else, feel free to use any library or framework of choice.
+
+Follow the directions from the recruiter on how to submit the exercise. Please do not publish your code publicly on GitHub or any other site; the visibility of your repository should be set to **private**. :warning:
 
 ## Nice to haves
 - TypeScript Support
