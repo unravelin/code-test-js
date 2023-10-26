@@ -1,5 +1,5 @@
 # Ravelin Front-End Code Test
-Build a small app to search for restaurants in London using the Foursquare API.
+Build a simple interface to search for restaurants in London using the Foursquare API.
 
 ## User Story
 A user visits a website with three text fields:
@@ -8,7 +8,7 @@ A user visits a website with three text fields:
 - Foursquare API Client Secret
 - Venue Name
 
-After entering the API Client ID/Secret and venue name, the user is presented with a list of venues to choose from. Clicking on a venue in the list should display details about the venue, including the venue's address and category (Coffee Shop, Gastropub, etc).
+After entering the API Client ID/Secret and venue name, the user is presented with a list of venues to choose from. Clicking on a venue in the list should display details about the venue, such as the venue's address or category.
 
 The website should cache search results for five minutes. When the user searches for a venue name that has been previously queried within the last five minutes, the page should display cached results rather than performing a new request to the Foursquare API.
 
@@ -17,9 +17,9 @@ The website should cache search results for five minutes. When the user searches
 - Showcase your CSS chops. Try and do some amount of original CSS styling.
 - Include a README alongside your code test detailing how to run it.
 
-This repo includes a basic scaffold using [create-react-app](https://github.com/facebook/create-react-app) which you are welcome to clone and use as a starting point. However, if you'd prefer to use something else, feel free to use any library or framework of choice.
+This repo includes a basic scaffold using [vite](https://vitejs.dev/guide/) which you are welcome use as a starting point — just run `npm install` and then `npm run dev` to get started. However, if you'd prefer to use something else, feel free to use any library or framework of choice.
 
-Follow the directions from the recruiter on how to submit the exercise. Please do not publish your code publicly on GitHub or any other site; the visibility of your repository should be set to **private**. :warning:
+Follow the directions from the recruiter on how to submit the exercise. Please do not publish your code publicly on GitHub or any other site. :warning:
 
 ## Nice to haves
 - TypeScript Support
