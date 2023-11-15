@@ -1,14 +1,13 @@
 # Ravelin Front-End Code Test
-Build a simple interface to search for restaurants in London using the Foursquare API.
+Build a simple interface to search for venues in London using the Foursquare API.
 
 ## User Story
-A user visits a website with three text fields:
+A user visits a website with two text fields:
 
-- Foursquare API Client ID
-- Foursquare API Client Secret
+- Authentication Key (an API key for the Foursquare API)
 - Venue Name
 
-After entering the API Client ID/Secret and venue name, the user is presented with a list of venues to choose from. Clicking on a venue in the list should display details about the venue, such as the venue's address or category.
+After entering an authentication key and venue name, the user is presented with a list of venues to choose from. Clicking on a venue in the list should display details about the venue, such as the venue's address or category.
 
 The website should cache search results for five minutes. When the user searches for a venue name that has been previously queried within the last five minutes, the page should display cached results rather than performing a new request to the Foursquare API.
 
@@ -28,11 +27,14 @@ Follow the directions from the recruiter on how to submit the exercise. Please d
 ## Resources
 
 #### Obtaining Foursquare Credentials
-To get access to the Foursquare API you need to create a developer account. Follow the steps in the [Foursquare docs](https://developer.foursquare.com/docs/api) to:
+To get access to the Foursquare API you need to create a developer account. Follow the steps in the [Foursquare docs](https://location.foursquare.com/developer/reference/places-api-overview) to:
 - Sign up
-- Create an app (your app URL can be localhost)
-- Obtain your Client ID and Client Secret
+- Create a new project
+- Generate an API key
 
-#### Foursquare Venue Search Endpoint
-- [Foursquare docs](https://developer.foursquare.com/docs/places-api/)
-- https://api.foursquare.com/v2/venues/search?near=London&query={venueName}&client_id={CLIENT_ID}&client_secret={CLIENT_SECRET}&v=20200226
+#### Authentication
+To authenticate a request to the Foursquare API, the authenication key should be passed in the `Authorization` header. See the [authentication docs](https://location.foursquare.com/developer/reference/authentication).
+
+#### Foursquare Nearby Places Endpoint
+- [Foursquare docs](https://location.foursquare.com/developer/reference/places-nearby)
+- https://api.foursquare.com/v3/places/nearby?ll=51.509223%2C-0.113492&query={venueName}
