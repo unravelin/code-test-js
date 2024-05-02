@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useAppContext } from "../AppContext";
 import './LandingPage.css';
 import { Link } from "react-router-dom";
 
@@ -17,7 +18,7 @@ interface SearchFormProps {
 }
 
 const SearchForm: React.FC<SearchFormProps> = ({ onSearch }) => {
-  const [apiKey, setApiKey] = useState("");
+  const { apiKey, setApiKey } = useAppContext();
   const [venueName, setVenueName] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -58,6 +59,7 @@ const LandingPage: React.FC = () => {
   const [venues, setVenues] = useState<Venue[]>([]);
   const [cache, setCache] = useState<{ [key: string]: { data: Venue[]; timestamp: number } }>({});
 
+
   const handleSearch = async (apiKey: string, venueName: string) => {
     const currentTime = new Date().getTime();
     const cacheEntry = cache[venueName];
@@ -92,9 +94,10 @@ const LandingPage: React.FC = () => {
         <ul className="venue-list">
           {venues.map(venue => (
             <ul key={venue.fsq_id}>
-              <Link to={`/places/${venue.fsq_id}`}>
-              <h2>{venue.name}</h2>
-              </Link>
+<Link to={`/places/${venue.fsq_id}`}>
+  <h2>{venue.name}</h2>
+</Link>
+
             </ul>
           ))}
         </ul>
