@@ -7,11 +7,9 @@
   align-items: center;
 }
 .form-group {
-  display: flex;
-  justify-content: right;
+ 
   margin-top: 10px;
-  flex-direction: column;
-  align-items: flex-start;
+
 }
 h1 {
   font-size: 22px;
@@ -63,7 +61,7 @@ input:focus {
 .landingPage-Card {
     display: flex;
     flex-direction: column;
-    width: 600px;
+    max-width: 600px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     margin: 20px auto;
     border-radius: 8px;
@@ -95,4 +93,17 @@ ul {
 /* Active state styling */
 .venue-list a:active {
   color: #181fff; 
+}
+
+/* Media Query */
+
+@media (max-width: 480px) {
+  .landingPage-Card {
+    margin: 5px;
+    padding: 5px;
+  }
+
+  .input, .button {
+    max-width: 100%;
+  }
 }
