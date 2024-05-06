@@ -86,19 +86,19 @@ const LandingPage: React.FC = () => {
   };
 
   return (
-    <div className="landing-page">
+    <div className="landingPage-Card">
       <h1 className="title">Venue Search</h1>
       <SearchForm onSearch={handleSearch} />
-      <h1 className="title">Venues near you</h1>
       {venues.length > 0 && (
         <ul className="venue-list">
           {venues.map(venue => (
-            <ul key={venue.fsq_id}>
+            <li key={venue.fsq_id}>
 <Link to={`/places/${venue.fsq_id}`}>
-  <h2>{venue.name}</h2>
+
+  {venue.name}
 </Link>
 
-            </ul>
+            </li>
           ))}
         </ul>
       )}

@@ -1,9 +1,10 @@
+
 .search-form {
   display: flex;
-  justify-content: right;
+  justify-content: center;
   margin-top: 20px;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
 }
 .form-group {
   display: flex;
@@ -12,20 +13,86 @@
   flex-direction: column;
   align-items: flex-start;
 }
-.button {
-  margin-top: 10px;
-  display: flex;
-  justify-content: right;
-  flex-direction: column;
-  align-items: flex-start;
+h1 {
+  font-size: 22px;
+  font-weight: 300;
+  margin-bottom: 20px;
+  font-family: 'Poppins', sans-serif;
+
+}
+.label {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 5px;
+  color: #0a216d;
 }
 .input {
-  height: 20px;
+  height: 30px;
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-family: 'poppins', sans-serif;
+  padding: 0 10px; 
+  display: block; 
+  font-size: 16px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
+  transition: border-color 0.3s ease; 
+  outline: #2a4afc;
+  color: #546499;
 }
-.venue-list {
-  display: flex;
-  justify-content: right;
+input:focus {
+  border-color: #2a4afc; 
+  box-shadow: 0 0 5px #2a4afc; 
+}
+.button {
   margin-top: 20px;
+  width: 100px;
+ height: 35px;
+  background-color: #2a4afc;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.button:hover {
+  background-color: #0427f0; 
+  border-color: #0327f0;
+  box-shadow: 0 3px 5px rgba(0,0,0,0.2); 
+}
+/* LandingPage */
+.landingPage-Card {
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    margin: 20px auto;
+    border-radius: 8px;
+    overflow: hidden;
+    padding: 20px;
+
+}
+
+/* List Display */
+.venue-list a {
+  display: flex;
   flex-direction: column;
   align-items: flex-start;
+  color: #0a216d; 
+  text-decoration: none; 
+  transition: background-color 0.3s, color 0.3s; 
+  cursor: pointer; 
+}
+/* Hover and focus effects */
+.venue-list a:hover, .venue-list a:focus {
+  color: #181fff; 
+}
+
+ul {
+  list-style-type: none;
+  
+}
+
+/* Active state styling */
+.venue-list a:active {
+  color: #181fff; 
 }

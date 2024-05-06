@@ -1,0 +1,47 @@
+.venue-details-card {
+ width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  background: #ffffff;
+}
+
+.categories-container {
+  display: flex;       
+  align-items: center; 
+  justify-content: center;
+  flex-wrap: wrap;   
+}
+
+.categories-container span {
+  white-space: nowrap;  
+  margin-right: 10px;  
+  margin-left: 5px;
+}
+
+.categories-list {
+  display: flex;        
+  list-style: none;    
+  padding: 0;       
+  margin: 0;        
+  align-items: center; 
+  flex-wrap: wrap;     
+}
+
+.categories-list li {
+  margin-right: 10px;   
+}
+
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.photo-grid img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
