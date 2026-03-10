@@ -1,40 +1,37 @@
 # Ravelin Front-End Code Test
-Build a simple interface to search for venues in London using the Foursquare API.
+
+Build a simple interface to search for museums using the Photon API.
 
 ## User Story
-A user visits a website with two text fields:
 
-- Authentication Key (an API key for the Foursquare API)
-- Venue Name
+A user visits a website with an input field.
 
-After entering an authentication key and venue name, the user is presented with a list of venues to choose from. Clicking on a venue in the list should display details about the venue, such as the venue's address or category.
+After entering a search term, the user is presented with a list of museums to choose from. Clicking a museum in the list should select it and display the museum's full address.
 
-The website should cache search results for five minutes. When the user searches for a venue name that has been previously queried within the last five minutes, the page should display cached results rather than performing a new request to the Foursquare API.
+The website should cache search results for five minutes. When the user enters a search term that was previously queried within the last five minutes, the page should display the cached results rather than performing a new request to the Photon API.
 
 ## Requirements
+
 - App must work as described in the User Story.
 - Showcase your CSS chops. Try and do some amount of original CSS styling.
 - Include a README alongside your code test detailing how to run it.
 
 This repo includes a basic scaffold using [vite](https://vitejs.dev/guide/) which you are welcome use as a starting point — just run `npm install` and then `npm run dev` to get started. However, if you'd prefer to use something else, feel free to use any library or framework of choice.
 
-Follow the directions from the recruiter on how to submit the exercise. Please do not publish your code publicly on GitHub or any other site. :warning:
-
 ## Nice to haves
+
 - TypeScript Support
 - Unit Tests
 
+## Submission
+
+- Please do not add your name, username, email address, or any other identifiable information into your code or README. We anonymise submissions prior to code review.
+- Do not use public source control (e.g. a public GitHub repository) or publish your solution online.
+- Follow the directions from the recruiter on how to submit the exercise.
+
 ## Resources
 
-#### Obtaining Foursquare Credentials
-To get access to the Foursquare API you need to create a developer account. Follow the steps in the [Foursquare docs](https://location.foursquare.com/developer/reference/places-api-overview) to:
-- Sign up
-- Create a new project
-- Generate an API key
+[Photon](https://photon.komoot.io/) is a free, open source geocoder using OpenStreetMap data. You are welcome to use the demo server for your project as long as the number of requests stay in a reasonable limit.
 
-#### Authentication
-To authenticate a request to the Foursquare API, the authenication key should be passed in the `Authorization` header. See the [authentication docs](https://location.foursquare.com/developer/reference/authentication).
-
-#### Foursquare Nearby Places Endpoint
-- [Foursquare docs](https://location.foursquare.com/developer/reference/places-nearby)
-- https://api.foursquare.com/v3/places/nearby?ll=51.509223%2C-0.113492&query={venueName}
+- [Photon API docs](https://github.com/komoot/photon/blob/master/docs/api-v1.md)
+- Example request: https://photon.komoot.io/api/?q=art&osm_tag=tourism:museum
